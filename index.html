@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoCare Pro | Mantenimiento Automotriz</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+  <nav class="navbar">
+    <div class="logo">AutoCare<span>Pro</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" onclick="mostrarVista('inicio')">Inicio & Servicios</a></li>
+      <li id="nav-auth"><a href="#" class="btn-nav" onclick="mostrarVista('auth')">Iniciar Sesión</a></li>
+      <li id="nav-panel" class="hidden"><a href="#" onclick="irAPanel()">Mi Panel</a></li>
+      <li id="nav-logout" class="hidden"><a href="#" class="btn-logout" onclick="cerrarSesion()">Salir</a></li>
+    </ul>
+  </nav>
+
+  <main id="vista-inicio" class="vista">
+    <header class="hero">
+      <div class="hero-content">
+        <h1>Expertos en el cuidado de tu vehículo</h1>
+        <p>Diagnóstico computarizado, mantenimiento preventivo y reparaciones garantizadas para mantener tu auto siempre en marcha.</p>
+        <button class="btn-primary" onclick="mostrarVista('auth')">Agendar / Ver mi historial</button>
+      </div>
+    </header>
+
+    <section class="servicios-section">
+      <h2>Nuestros Servicios</h2>
+      <p class="subtitle">Soluciones integrales con repuestos originales y técnicos certificados</p>
+      
+      <div class="servicios-grid">
+        <div class="card-servicio">
+          <div class="icon">🛢️</div>
+          <h3>Cambio de Aceite y Filtros</h3>
+          <p>Lubricantes sintéticos y semi-sintéticos de alto rendimiento, reemplazo de filtro de aceite, aire y cabina.</p>
+        </div>
+        <div class="card-servicio">
+          <div class="icon">🛑</div>
+          <h3>Sistema de Frenos</h3>
+          <p>Revisión y cambio de pastillas, rectificación de discos, purga de líquido de frenos y revisión de ABS.</p>
+        </div>
+        <div class="card-servicio">
+          <div class="icon">💻</div>
+          <h3>Diagnóstico Electrónico</h3>
+          <p>Escaneo completo de computadora (OBD-II), lectura de códigos de falla, sensores y sistema eléctrico.</p>
+        </div>
+        <div class="card-servicio">
+          <div class="icon">⚙️</div>
+          <h3>Alineación y Balanceo</h3>
+          <p>Ajuste de suspensión, dirección, rotación de neumáticos y balanceo computarizado para mayor estabilidad.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-extra">
+      <div class="info-box">
+        <h3>¿Por qué elegirnos?</h3>
+        <ul>
+          <li>✔ Historial digital de todos los mantenimientos de tu vehículo.</li>
+          <li>✔ Garantía escrita en mano de obra y repuestos.</li>
+          <li>✔ Transparencia total en costos y diagnósticos.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  
+  <section id="vista-auth" class="vista hidden">
+    <div class="auth-split-card">
+      
+      <div class="auth-image-side">
+        <div class="auth-image-overlay">
+          <span class="auth-tag">Portal Digital</span>
+          <h2>Control total de tu vehículo en un solo lugar</h2>
+          <p>Consulta diagnósticos, historial técnico y estado de cada servicio en tiempo real.</p>
+        </div>
+      </div>
+
+      
+      <div class="auth-form-side">
+        <div class="tabs">
+          <button class="tab-btn active" id="tab-login" onclick="cambiarTabAuth('login')">Iniciar Sesión</button>
+          <button class="tab-btn" id="tab-registro" onclick="cambiarTabAuth('registro')">Registrarse</button>
+        </div>
+
+
+        <form id="form-login" onsubmit="iniciarSesion(event)">
+          <h2>Bienvenido de nuevo</h2>
+          <p class="auth-sub">Ingresa tus credenciales para acceder a tu cuenta</p>
+          <div class="input-group">
+            <label>Correo Electrónico</label>
+            <input type="email" id="login-email" required placeholder="ejemplo@correo.com">
+          </div>
+          <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" id="login-pass" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn-primary full-width">Ingresar</button>
+        </form>
+
+      
+        <form id="form-registro" class="hidden" onsubmit="registrarUsuario(event)">
+          <h2>Crear Cuenta</h2>
+          <p class="auth-sub">Regístrate para consultar el historial de tu vehículo</p>
+          <div class="input-group">
+            <label>Nombre Completo</label>
+            <input type="text" id="reg-nombre" required placeholder="Juan Pérez">
+          </div>
+          <div class="input-group">
+            <label>Correo Electrónico</label>
+            <input type="email" id="reg-email" required placeholder="juan@correo.com">
+          </div>
+          <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" id="reg-pass" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn-primary full-width">Registrarme</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="vista-admin" class="vista hidden">
+    <div class="admin-topbar">
+      <div>
+        <span class="badge-rol admin">Rol: Administrador</span>
+        <h2>Centro de Control del Taller</h2>
+        <p>Administra órdenes de servicio, estados y registros de clientes</p>
+      </div>
+      <button class="btn-primary btn-nuevo-registro" onclick="abrirModalAdmin()">
+        + Nuevo Mantenimiento
+      </button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Total Órdenes</span>
+        <strong class="stat-value" id="stat-total">0</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">En Proceso / Pendientes</span>
+        <strong class="stat-value text-warning" id="stat-activos">0</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Completados</span>
+        <strong class="stat-value text-success" id="stat-completados">0</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Ingresos Registrados</span>
+        <strong class="stat-value text-primary" id="stat-ingresos">$0.00</strong>
+      </div>
+    </div>
+
+
+    <div class="table-card admin-table-card">
+      <div class="table-header-bar">
+        <h3>Registro de Mantenimientos</h3>
+        <div class="table-filters">
+          <input type="text" id="buscar-admin" placeholder="Buscar cliente, placa o servicio..." onkeyup="renderTablaAdmin()">
+          <select id="filtro-estado-admin" onchange="renderTablaAdmin()">
+            <option value="TODOS">Todos los estados</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En Proceso">En Proceso</option>
+            <option value="Completado">Completado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Vehículo / Placa</th>
+              <th>Servicio</th>
+              <th>Fecha</th>
+              <th>Costo</th>
+              <th>Estado</th>
+              <th>Observaciones</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-admin-body"></tbody>
+        </table>
+      </div>
+      <p id="admin-sin-datos" class="empty-msg hidden">No hay mantenimientos registrados todavía. Haz clic en "+ Nuevo Mantenimiento" para agregar uno.</p>
+    </div>
+
+    <div id="modal-admin" class="modal-backdrop hidden">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 id="form-crud-titulo">Registrar Nuevo Mantenimiento</h3>
+          <button type="button" class="btn-close-modal" onclick="cerrarModalAdmin()">&times;</button>
+        </div>
+        <form id="form-mantenimiento" onsubmit="guardarMantenimiento(event)">
+          <input type="hidden" id="mant-id">
+          
+          <div class="input-group">
+            <label>Cliente asignado</label>
+            <select id="mant-cliente" required></select>
+          </div>
+          <div class="input-group">
+            <label>Vehículo (Marca, Modelo y Placa)</label>
+            <input type="text" id="mant-vehiculo" required placeholder="Ej: Chevrolet Sail - ABC-1234">
+          </div>
+          <div class="input-group">
+            <label>Servicio Realizado</label>
+            <select id="mant-servicio" required>
+              <option value="Cambio de Aceite y Filtros">Cambio de Aceite y Filtros</option>
+              <option value="Sistema de Frenos">Sistema de Frenos</option>
+              <option value="Diagnóstico Electrónico">Diagnóstico Electrónico</option>
+              <option value="Alineación y Balanceo">Alineación y Balanceo</option>
+              <option value="Mantenimiento General">Mantenimiento General</option>
+            </select>
+          </div>
+          <div class="input-row">
+            <div class="input-group">
+              <label>Fecha</label>
+              <input type="date" id="mant-fecha" required>
+            </div>
+            <div class="input-group">
+              <label>Costo ($)</label>
+              <input type="number" id="mant-costo" step="0.01" min="0" required placeholder="45.00">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Estado</label>
+            <select id="mant-estado">
+              <option value="Pendiente">Pendiente</option>
+              <option value="En Proceso">En Proceso</option>
+              <option value="Completado">Completado</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Observaciones Técnicas</label>
+            <textarea id="mant-notas" rows="3" placeholder="Detalles del trabajo realizado o repuestos..."></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" onclick="cerrarModalAdmin()">Cancelar</button>
+            <button type="submit" class="btn-primary" id="btn-guardar-mant">Guardar Registro</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="vista-cliente" class="vista hidden">
+    <div class="panel-header">
+      <div>
+        <h2 id="cliente-saludo">Hola, Cliente</h2>
+        <p>Aquí puedes consultar el historial de mantenimientos realizados a tus vehículos</p>
+      </div>
+      <span class="badge-rol cliente">Rol: Cliente</span>
+    </div>
+
+    <div class="table-card">
+      <h3>Mis Mantenimientos</h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Vehículo</th>
+              <th>Servicio</th>
+              <th>Fecha</th>
+              <th>Costo</th>
+              <th>Estado</th>
+              <th>Observaciones del Taller</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-cliente-body"></tbody>
+        </table>
+      </div>
+      <p id="mensaje-sin-datos" class="empty-msg hidden">Aún no tienes mantenimientos registrados a tu nombre.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 AutoCare Pro - Taller de Mantenimiento Automotriz</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
